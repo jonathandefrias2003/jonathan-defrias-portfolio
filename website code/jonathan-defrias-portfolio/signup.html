@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Commonplace | Reserve a seat</title>
+  <meta name="description" content="Reserve your seat at Commonplace, a monthly book club for curious readers.">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap');
+    :root{--ink:#111a20;--paper:#dfe9e8;--paper-deep:#cbdad9;--coral:#b9382c;--blue:#9ab5c1;--line:rgba(17,26,32,.25);--muted:#4e5d64}
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;line-height:1.45}
+    ::selection{background:var(--coral);color:var(--ink)}
+    a{color:inherit;text-decoration:none}
+    a:focus-visible,input:focus-visible,button:focus-visible{outline:3px solid var(--coral);outline-offset:4px}
+    button,input{font:inherit}
+    .site-header{border-bottom:1px solid var(--line);height:76px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(24px,5vw,80px)}
+    .brand{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+    .brand-mark{width:26px;height:26px;border:1px solid var(--ink);display:grid;place-items:center;font-family:'Newsreader',serif;font-size:18px;font-weight:600;line-height:1}
+    .header-note{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.05em}
+    main{max-width:1440px;margin:0 auto;padding:clamp(58px,9vw,128px) clamp(24px,7vw,112px) 92px}
+    .register{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(360px,.8fr);gap:clamp(58px,10vw,160px);position:relative}
+    .register:after{content:'';position:absolute;left:calc(59.5% - 1px);top:4px;bottom:0;width:1px;background:var(--line);pointer-events:none}
+    .event{padding-right:clamp(0px,3vw,44px)}
+    h1{font-family:'Newsreader',serif;font-size:clamp(58px,8.1vw,124px);font-weight:400;line-height:.87;letter-spacing:-.065em;max-width:650px;margin-bottom:48px}
+    h1 em{font-style:italic;color:var(--coral)}
+    .event-intro{font-size:clamp(19px,2vw,26px);line-height:1.3;max-width:510px;margin-bottom:62px}
+    .event-details{border-top:1px solid var(--ink);max-width:560px}
+    .detail{display:grid;grid-template-columns:120px 1fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);font-size:15px}
+    .detail dt{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);padding-top:3px}
+    .detail dd{font-weight:500}
+    .detail dd span{display:block;color:var(--muted);font-size:13px;font-weight:400;margin-top:3px}
+    .seat-line{display:flex;align-items:center;gap:14px;margin-top:26px;color:var(--muted);font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.04em}
+    .seat-line b{color:var(--ink);font-weight:500}
+    .seat-dot{width:9px;height:9px;background:var(--coral);border-radius:50%;display:inline-block}
+    .form-wrap{padding-top:5px;position:relative;z-index:1}
+    .form-wrap h2{font-family:'Newsreader',serif;font-size:42px;font-weight:400;line-height:1;margin-bottom:12px;letter-spacing:-.035em}
+    .form-lede{font-size:14px;color:var(--muted);max-width:340px;margin-bottom:36px}
+    form{max-width:420px}
+    label{display:block;font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;font-size:11px;margin-bottom:9px;color:var(--muted)}
+    .field{margin-bottom:24px}
+    input{width:100%;border:0;border-bottom:1px solid var(--ink);border-radius:0;background:transparent;color:var(--ink);padding:10px 0 11px;outline:none;font-size:16px;transition:border-color .2s ease}
+    input::placeholder{color:#8c918f}
+    input:focus{border-bottom:2px solid var(--coral);padding-bottom:10px}
+    .consent{display:flex;gap:10px;align-items:flex-start;margin:10px 0 26px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;line-height:1.4;color:var(--muted);text-transform:none;letter-spacing:0}
+    .consent input{flex:0 0 15px;width:15px;height:15px;accent-color:var(--coral);margin-top:1px;cursor:pointer}
+    .reserve{border:1px solid var(--ink);background:var(--ink);color:var(--paper);width:100%;min-height:54px;padding:17px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;font-weight:600;transition:background .2s,color .2s,transform .2s}
+    .reserve:hover{background:var(--coral);color:var(--ink);transform:translateY(-2px)}
+    .reserve:active{transform:translateY(0)}
+    .arrow{width:18px;height:18px;line-height:0;transition:transform .2s ease}
+    .reserve:hover .arrow{transform:translate(2px,-2px)}
+    .fine-print{font-size:12px;color:var(--muted);margin-top:15px;max-width:370px}
+    .confirmation{display:none;border-top:1px solid var(--ink);padding-top:24px}
+    .confirmation.show{display:block;animation:reveal .35s ease-out both}
+    .confirmation strong{font-family:'Newsreader',serif;font-size:35px;font-weight:400;display:block;margin-bottom:8px}
+    .confirmation p{font-size:14px;color:var(--muted);max-width:330px}
+    .footer-note{border-top:1px solid var(--line);margin-top:100px;padding-top:18px;display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--muted)}
+    @keyframes reveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reserve,.arrow,.confirmation.show{transition:none;animation:none}}
+     @media(max-width:760px){
+      .site-header{height:64px;padding:0 20px}.header-note{display:none}
+      main{padding:56px 20px 60px}.register{display:block}.register:after{display:none}
+      h1{font-size:clamp(64px,19vw,100px);margin-bottom:34px}.event-intro{font-size:20px;margin-bottom:42px}
+       .event-details{margin-bottom:64px}.detail{grid-template-columns:100px minmax(0,1fr);gap:12px}
+      .form-wrap{border-top:1px solid var(--ink);padding-top:38px}.form-wrap h2{font-size:38px}
+      .footer-note{margin-top:72px;gap:12px;flex-wrap:wrap}.footer-note span:last-child{width:100%}
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Commonplace home"><span class="brand-mark">C</span> Commonplace</a>
+    <span class="header-note">A monthly book club for curious readers</span>
+  </header>
+  <main>
+    <div class="register">
+      <section class="event" aria-labelledby="page-title">
+        <h1 id="page-title">Read<br>something<br><em>together.</em></h1>
+        <p class="event-intro">One book. One evening. A table full of ideas worth staying late for.</p>
+        <dl class="event-details">
+          <div class="detail"><dt>Next event</dt><dd>Saturday, October 24, 2026<span>Our October gathering</span></dd></div>
+          <div class="detail"><dt>Where</dt><dd>The Lantern Room<span>118 King Street East, Hamilton</span></dd></div>
+          <div class="detail"><dt>When</dt><dd>7:00 PM – 9:00 PM<span>Doors open at 6:45 PM</span></dd></div>
+          <div class="detail"><dt>Reading</dt><dd>Book announced soon<span>Bring the last book you loved</span></dd></div>
+        </dl>
+        <p class="seat-line"><span class="seat-dot" aria-hidden="true"></span><b>8 seats open</b> · reserve below</p>
+      </section>
+      <section class="form-wrap" aria-labelledby="reserve-title">
+        <h2 id="reserve-title">Reserve your seat</h2>
+        <p class="form-lede">Leave your details and we’ll hold a place at the table for this month’s conversation.</p>
+        <form id="signup-form">
+          <div class="field"><label for="name">Your name</label><input id="name" name="name" type="text" autocomplete="name" placeholder="Jane Austen" required></div>
+          <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" autocomplete="email" placeholder="jane@example.com" required></div>
+          <label class="consent"><input type="checkbox" required> <span>Send me the reading list and occasional notes from Commonplace.</span></label>
+           <button class="reserve" type="submit"><span>Reserve my seat</span><svg class="arrow" aria-hidden="true" viewBox="0 0 18 18" fill="none"><path d="M3 15 15 3M6 3h9v9" stroke="currentColor" stroke-width="1.5" stroke-linecap="square"/></svg></button>
+          <p class="fine-print">No payment required. If plans change, reply to your confirmation email so we can offer the seat to another reader.</p>
+        </form>
+         <div class="confirmation" id="confirmation" role="status" aria-live="polite" tabindex="-1">
+          <strong>You’re on the list.</strong>
+          <p>Your seat is held for October 24. Check your inbox for the details and the book announcement.</p>
+        </div>
+      </section>
+    </div>
+    <footer class="footer-note"><span>Commonplace / Monthly book club</span><span>Come curious, leave connected</span></footer>
+  </main>
+  <script>
+    document.querySelector('#signup-form').addEventListener('submit', function(event) {
+       event.preventDefault();
+       this.hidden = true;
+       const confirmation = document.querySelector('#confirmation');
+       confirmation.classList.add('show');
+       confirmation.focus();
+    });
+  </script>
+</body>
+</html>
